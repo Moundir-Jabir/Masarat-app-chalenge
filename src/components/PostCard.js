@@ -1,6 +1,6 @@
 import { TouchableOpacity, StyleSheet, Text } from 'react-native'
 
-const PostCard = ({data: {title, userId, id, body}, navigation}) => {
+const PostCard = ({data: {title, userId, id, body}, navigation, onDelete}) => {
   let wordCount = body.split(/\s+/);
   wordCount = wordCount.length
   const moveToDetail = () => {
@@ -15,6 +15,7 @@ const PostCard = ({data: {title, userId, id, body}, navigation}) => {
       <Text>- Id : {id}</Text>
       <Text>- Body : {body}</Text>
       <Text>Word Count : {wordCount} words</Text>
+      <Text onPress={() => onDelete(id)} style={{color: "red"}}>Delete Post</Text>
     </TouchableOpacity>
   )
 }

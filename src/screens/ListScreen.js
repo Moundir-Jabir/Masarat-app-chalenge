@@ -4,6 +4,7 @@ import api from "../utils/api"
 import PostCard from "../components/PostCard"
 import { FlatList, View, StyleSheet, TouchableOpacity, Text } from "react-native"
 import { nbrOfPostPerPage } from "../utils/config"
+import Search from "../components/Search"
 
 const ListScreen = ({navigation}) => {
     const [posts, setPosts] = useState([])
@@ -34,13 +35,26 @@ const ListScreen = ({navigation}) => {
     const changePage = (p) => {
         setPage(p)
     }
+
+    const search = (text) => {
+    }
+
+    const deletePost = (idPost) => {
+        api.delete(`/posts/${idPost}`)
+            .then(res => {
+                alert("post deleted")
+                const newPosts = posts.filter(item => item.id !== idPost)
+                setPosts(newPosts)
+            })
+    }
     
   return (
     <Screen>
         <View style={styles.list}>
+            <Search/>
             <FlatList
             data={paginatedPost}
-            renderItem={({item}) => <PostCard navigation={navigation} data={item} />}
+            renderItem={({item}) => <PostCard onDelete={deletePost} navigation={navigation} data={item} />}
             keyExtractor={item => item.id}
             ItemSeparatorComponent={(<View style={styles.separator}></View>)}
             />
