@@ -5,9 +5,9 @@ import PostCard from "../components/PostCard"
 import { FlatList, View, StyleSheet, TouchableOpacity, Text } from "react-native"
 import { nbrOfPostPerPage } from "../utils/config"
 
-const ListScreen = () => {
+const ListScreen = ({navigation}) => {
     const [posts, setPosts] = useState([])
-    const [page, setPage] = useState(4)
+    const [page, setPage] = useState(1)
     const pages = Math.ceil(posts.length / nbrOfPostPerPage)
     const allPages = []
     for (let i = 1 ; i<=pages ; i++){
@@ -21,7 +21,7 @@ const ListScreen = () => {
         setPaginatedPost(paginatedPosts)
     }
     useEffect(() => {
-        api.get("")
+        api.get("/posts")
             .then(res => {
                 setPosts(res.data)
             })
@@ -40,7 +40,7 @@ const ListScreen = () => {
         <View style={styles.list}>
             <FlatList
             data={paginatedPost}
-            renderItem={({item}) => <PostCard data={item} />}
+            renderItem={({item}) => <PostCard navigation={navigation} data={item} />}
             keyExtractor={item => item.id}
             ItemSeparatorComponent={(<View style={styles.separator}></View>)}
             />

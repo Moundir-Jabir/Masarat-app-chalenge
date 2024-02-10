@@ -1,10 +1,15 @@
 import { TouchableOpacity, StyleSheet, Text } from 'react-native'
 
-const PostCard = ({data: {title, userId, id, body}}) => {
+const PostCard = ({data: {title, userId, id, body}, navigation}) => {
   let wordCount = body.split(/\s+/);
   wordCount = wordCount.length
+  const moveToDetail = () => {
+    navigation.navigate('Detail', {
+      postId: id
+    })
+  }
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity onPress={() => moveToDetail()} style={styles.container}>
       <Text style={styles.title}>{title}</Text>
       <Text>- User id : {userId}</Text>
       <Text>- Id : {id}</Text>
